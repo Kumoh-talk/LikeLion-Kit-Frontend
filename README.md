@@ -5,7 +5,7 @@
 - Test PW : testPassword
 
 <details>
-<summary>토글 접기/펼치기</summary>
+<summary>커밋 컨벤션</summary>
 <div markdown="1">
 | 커밋 유형 | 의미 |
 | --- | --- |
