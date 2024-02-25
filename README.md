@@ -1,8 +1,8 @@
 # 🦁 금오공과대학교 멋쟁이사자처럼 Likelion-Kit
 
 - 배포 URL : http://ec2-3-27-33-141.ap-southeast-2.compute.amazonaws.com:5000/
-- Test ID : 
-- Test PW : 
+- Test ID : test@kumoh.ac.kr
+- Test PW : testPassword
 
 <br>
 
