@@ -7,6 +7,7 @@
 <details>
 <summary>커밋 컨벤션</summary>
 <div markdown="1">
+    
 | 커밋 유형 | 의미 |
 | --- | --- |
 | Feat | 새로운 기능 추가 |
@@ -22,6 +23,7 @@
 | Remove | 파일을 삭제하는 작업만 수행한 경우 |
 | !BREAKING CHANGE | 커다란 API 변경의 경우 |
 | !HOTFIX | 급하게 치명적인 버그를 고쳐야 하는 경우 |
+
 </div>
 </details>
 
