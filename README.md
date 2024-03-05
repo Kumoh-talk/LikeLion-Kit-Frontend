@@ -132,7 +132,7 @@
 
 ### 작업 관리
 
-- GitHub Projects와 Issues를 사용하여 진행 상황을 공유했습니다.
+- 
 
 <br>
 
