@@ -52,7 +52,7 @@
 
 ## 1. 개발 환경
 
-- Front : HTML, React, styled-components, Justand, React-Qeury
+- Front : HTML, React, styled-components, Zustand, React-Qeury
 - Back-end : Java, Spring
 - 버전 및 이슈관리 : Github, Github Issues, Github Project
 - 협업 툴 : Discord, Notion, Github
