@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Responsive from "./Responsive";
 import Button from "./Button";
 import { Link } from "react-router-dom";
@@ -33,17 +33,15 @@ const Wrapper = styled(Responsive)`
     display: flex;
     width: 60%;
     justify-content: flex-start;
+    align-items: center;
     position: relative;
     right: 2rem;
 
-    .menu {
-      display: inline-block;
+    .navBlock {
+      display: flex;
       position: relative;
       font-size: 1.125rem;
       font-weight: 800;
-      letter-space: 2px;
-      text-decoration: none;
-      color: ${palette.black[1]};
 
       &:after {
         background: none repeat scroll 0 0 transparent;
@@ -69,15 +67,21 @@ const Wrapper = styled(Responsive)`
         color: ${palette.black[0]};
       }
 
-      & + .menu {
+      & + .navBlock {
         margin-left: 3rem;
         @media (max-width: 1000px) {
           margin-left: 2.5rem;
         }
       }
 
-      @media (max-width: 900px) {
+      @media (max-width: 850px) {
         display: none;
+      }
+
+      .menu,
+      .menuSelectBox {
+        text-decoration: none;
+        color: ${palette.black[1]};
       }
     }
   }
@@ -85,7 +89,7 @@ const Wrapper = styled(Responsive)`
   .right {
     display: flex;
     align-items: center;
-    @media (max-width: 900px) {
+    @media (max-width: 850px) {
       display: none;
     }
   }
@@ -94,7 +98,7 @@ const Wrapper = styled(Responsive)`
     display: none;
     cursor: pointer;
 
-    @media (max-width: 900px) {
+    @media (max-width: 850px) {
       display: flex;
       align-items: center;
     }
@@ -110,37 +114,77 @@ const UserInfo = styled.div`
   margin-right: 1rem;
 `;
 
+const NavSelectBox = styled.div`
+  display: none;
+  border-bottom: 1px solid ${palette.black[1]};
+  border-right: 1px solid ${palette.black[1]};
+  border-left: 1px solid ${palette.black[1]};
+  background-color: white;
+  position: absolute;
+  top: 1.7rem;
+  width: 100%;
+
+  ${(props) =>
+    props.show &&
+    css`
+      display: block;
+    `}
+
+  .selectMenu {
+    display: block;
+    text-decoration: none;
+    color: ${palette.black[1]};
+    border: 1px solid ${palette.black[1]};
+    padding: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${palette.gray[3]};
+    }
+  }
+`;
+
 const menus = [
   {
     url: "/about",
     name: "About",
+    selectBox: null,
   },
   {
     url: "/",
     name: "Project",
+    selectBox: null,
   },
   {
-    url: "/",
-    name: "Inquire",
-  },
-  {
-    url: "/",
-    name: "Assignment",
-  },
-  {
-    url: "/",
-    name: "Study",
+    url: "/community",
+    name: "Community",
+    selectBox: ["Study", "Assign", "Inquire"],
   },
 ];
 
-const Header = ({ user, onLogout, show, setShow }) => {
+const Header = ({
+  user,
+  onLogout,
+  show,
+  setShow,
+  selectShow,
+  setSelectShow,
+  MoveToTop,
+}) => {
   const menuIcon = useRef(null);
+
+  const NavigationBlockEvent = (e) => {
+    if (e.target.className === "menuSelectBox") {
+      e.preventDefault();
+    }
+    MoveToTop();
+  };
 
   return (
     <>
       <HeaderBlock>
         <Wrapper>
-          <Link to="/" className="logo">
+          <Link to="/" className="logo" onClick={MoveToTop}>
             <img
               src={`${process.env.PUBLIC_URL}/image/logo.png`}
               alt="logo"
@@ -149,9 +193,29 @@ const Header = ({ user, onLogout, show, setShow }) => {
           </Link>
           <div className="navbar">
             {menus.map((menu) => (
-              <Link to={menu.url} className="menu">
-                {menu.name}
-              </Link>
+              <div
+                className="navBlock"
+                onMouseEnter={menu.selectBox && (() => setSelectShow(true))}
+                onMouseLeave={menu.selectBox && (() => setSelectShow(false))}
+              >
+                <Link
+                  to={menu.url}
+                  className={`menu${menu.selectBox ? "SelectBox" : ""}`}
+                  onClick={NavigationBlockEvent}
+                >
+                  {menu.name}
+                  {menu.selectBox ? "  ⌵" : null}
+                </Link>
+                {menu.selectBox ? (
+                  <NavSelectBox show={selectShow}>
+                    {menu.selectBox.map((select) => (
+                      <Link to={`/community/${select}`} className="selectMenu">
+                        {select}
+                      </Link>
+                    ))}
+                  </NavSelectBox>
+                ) : null}
+              </div>
             ))}
           </div>
           {user ? (
