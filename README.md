@@ -132,7 +132,7 @@
 
 ### 작업 관리
 
-- 
+- Githuv Projects와 Issue로 협업을 진행하였습니다.
 
 <br>
 
