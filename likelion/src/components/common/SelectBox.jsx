@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import palette from "../../lib/styles/palette";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 
 const StyledSelect = styled.div`
   position: relative;
-  border: none;
   border-bottom: 1px solid ${palette.gray[5]};
   padding-bottom: 0.5rem;
-  outline: none;
-  width: 100%;
   cursor: pointer;
   &:hover {
     color: $oc-teal-7;
@@ -17,7 +13,6 @@ const StyledSelect = styled.div`
   }
   margin-top: 1rem;
   margin-bottom: 1rem;
-  z-index: 3;
 
   &::before {
     content: "⌵";
@@ -40,6 +35,7 @@ const Label = styled.label`
 const SelectOptions = styled.ul`
   position: absolute;
   list-style: none;
+  z-index: 3;
   top: 1.8rem;
   left: 0;
   width: 100%;
@@ -52,6 +48,7 @@ const SelectOptions = styled.ul`
 const Option = styled.li`
   font-size: 1rem;
   padding: 0.3rem 0.4rem;
+  background-color: #ffffff;
   transition: background-color 0.2s ease-in;
   &:hover {
     background-color: #e8e8e8;
@@ -62,12 +59,15 @@ const SelectBox = ({ options, type, name, placeholder, changeField }) => {
   const [isShowOptions, setIsShowOptions] = useState(false);
   const [currentValue, setCurrentValue] = useState(placeholder);
   const ref = useRef(null);
-  const dispatch = useDispatch();
 
   const handleOnChangeSelectValue = useCallback((e) => {
     const { innerText } = e.target;
     setCurrentValue(innerText);
   }, []);
+
+  useEffect(() => {
+    if (currentValue === "") setCurrentValue(placeholder);
+  }, [currentValue, placeholder]);
 
   useEffect(() => {
     if (currentValue === placeholder) return;
